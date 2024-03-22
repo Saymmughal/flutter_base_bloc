@@ -55,3 +55,18 @@ void goBackIfCan({Future<Object?>? elseCondition}) {
     elseCondition;
   }
 }
+
+void goAndRemoveAllPath(String routeName, {Object? arguments}) {
+  if (canGoBack()) {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+  }
+  goReplacementNamed(routeName, arguments: arguments);
+}
+
+void goForwardAndBackUntilPath(String currentScreen, String routeName,
+    {Object? arguments}) {
+  if (canGoBack()) {
+    goBackUntil(currentScreen);
+  }
+  goReplacementNamed(routeName, arguments: arguments);
+}

@@ -49,7 +49,7 @@ class ApiRepo {
   // url => url of the api
   // Map data => json data for api
 
-  postRequest(String screen, String url, Map<String, dynamic> data) async {
+  postRequest(String screen, String url, Map<String, dynamic> data, {Object? arguments}) async {
     debugPrint(
         "Post Request=====================>>> \n URl : $url \n Sending data : $data");
 
@@ -76,13 +76,13 @@ class ApiRepo {
       return response;
     } on DioException catch (exception) {
       // If Exception Occur calling dioError method to Handle the Exception
-      return dioError(exception, screen);
+      return dioError(exception, screen, arguments: arguments);
     }
   }
 
   // ======================================================================
   // GET REQUEST
-  getRequest(String screen, String url, Map<String, dynamic> data) async {
+  getRequest(String screen, String url, Map<String, dynamic> data, {Object? arguments}) async {
     debugPrint(
         "Get Request=====================>>> \n URl : $url \n Sending data : $data");
 
@@ -106,13 +106,13 @@ class ApiRepo {
       return response;
     } on DioException catch (exception) {
       //If Exception Occur calling dioError method to Handle the Exception
-      return dioError(exception, screen);
+      return dioError(exception, screen, arguments: arguments);
     }
   }
 
   // ======================================================================
   // PUT REQUEST
-  putRequest(String screen, String url, Map<String, dynamic> data) async {
+  putRequest(String screen, String url, Map<String, dynamic> data, {Object? arguments}) async {
     debugPrint(
         "Put Request=====================>>> \n URl : $url \n Sending data : $data");
 
@@ -135,13 +135,13 @@ class ApiRepo {
       return response;
     } on DioException catch (exception) {
       // If Exception Occur calling dioError method to Handle the Exception
-      return dioError(exception, screen);
+      return dioError(exception, screen, arguments: arguments);
     }
   }
 
   // ======================================================================
   // DELETE REQUEST
-  deleteRequest(String screen, String url, Map<String, dynamic> data) async {
+  deleteRequest(String screen, String url, Map<String, dynamic> data, {Object? arguments}) async {
     debugPrint(
         "Delete Request=====================>>> \n URl : $url \n Sending data : $data");
 
@@ -165,7 +165,7 @@ class ApiRepo {
       return response;
     } on DioException catch (exception) {
       // If Exception Occur calling dioError method to Handle the Exception
-      return dioError(exception, screen);
+      return dioError(exception, screen, arguments: arguments);
     }
   }
 
@@ -175,7 +175,7 @@ class ApiRepo {
   //When we are uploading Media  like (image,file,video,audio,etc)
   //then we are using multipart request
 
-  multipartRequest(String screen, String url, Map<String, dynamic> data) async {
+  multipartRequest(String screen, String url, Map<String, dynamic> data, {Object? arguments}) async {
     debugPrint(
         "Multipart Request=====================>>> \n URl : $url \n Sending data : $data");
 
@@ -202,13 +202,13 @@ class ApiRepo {
       return response;
     } on DioException catch (exception) {
       // If Exception Occur calling dioError method to Handle the Exception
-      return dioError(exception, screen);
+      return dioError(exception, screen, arguments: arguments);
     }
   }
 
   // ======================================================================
   // DOWNLOAD REQUEST
-  downloadRequest(String screen, String url, String savePath) async {
+  downloadRequest(String screen, String url, String savePath, {Object? arguments}) async {
     debugPrint("Download Request=====================>>> \n URl : $url");
 
     // Get the bearer token which we have stored in sharedPreferences before
@@ -240,7 +240,7 @@ class ApiRepo {
       return response;
     } on DioException catch (exception) {
       // If Exception Occur calling dioError method to Handle the Exception
-      return dioError(exception, screen);
+      return dioError(exception, screen, arguments: arguments);
     }
   }
 
@@ -252,7 +252,7 @@ class ApiRepo {
   // url => url of the api
   // Map data => json data for api
 
-  patchRequest(String screen, String url, Map<String, dynamic> data) async {
+  patchRequest(String screen, String url, Map<String, dynamic> data, {Object? arguments}) async {
     debugPrint(
         "Patch Request=====================>>> \n URl : $url \n Sending data : $data");
 
@@ -279,14 +279,14 @@ class ApiRepo {
       return response;
     } on DioException catch (exception) {
       // If Exception Occur calling dioError method to Handle the Exception
-      return dioError(exception, screen);
+      return dioError(exception, screen, arguments: arguments);
     }
   }
 
   // ======================================================================
   // Error Handling
 
-  Future<dynamic> dioError(DioException exception, String screen) async {
+  Future<dynamic> dioError(DioException exception, String screen, {Object? arguments}) async {
     // if response is 400 OR 401 then we will return back API response otherwise we will navigate to  Error Screen
     debugPrint(
         "Exception Response ===================> ${exception.response!.data}");
@@ -300,7 +300,7 @@ class ApiRepo {
       }
     }
     await Future.delayed(Duration.zero, () {
-      apiException(exception, screen);
+      apiException(exception, screen, arguments: arguments);
     });
   }
 }

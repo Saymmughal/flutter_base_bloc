@@ -9,6 +9,7 @@ import '../helper/routes_helper.dart';
 Future<bool> checkInternet(
   NavigatorState navigator,
   String screen,
+  {Object? arguments}
 ) async {
   var connectivityResult = await (Connectivity().checkConnectivity());
   if (connectivityResult == ConnectivityResult.mobile) {
@@ -17,7 +18,7 @@ Future<bool> checkInternet(
       return true;
     } else {
       debugPrint("no connection");
-      navigateToNoConnectionScreen(screen);
+      navigateToNoConnectionScreen(screen, arguments: arguments);
       return false;
     }
   } else if (connectivityResult == ConnectivityResult.wifi) {
@@ -25,24 +26,25 @@ Future<bool> checkInternet(
       debugPrint("Connected with wifi");
       return true;
     } else {
-      navigateToNoConnectionScreen(screen);
+      navigateToNoConnectionScreen(screen, arguments: arguments);
       debugPrint("no connection");
       return false;
     }
   } else {
     debugPrint(" not Connected");
-    navigateToNoConnectionScreen(screen);
+    navigateToNoConnectionScreen(screen, arguments: arguments);
     return false;
   }
 }
 
-void navigateToNoConnectionScreen(String screen) {
+void navigateToNoConnectionScreen(String screen, {Object? arguments}) {
   Future.delayed(Duration.zero, () {
     goReplacementNamed(
       RouterHelper.noConnectionScreen,
       arguments: ConnectionModel(
         currentScreen: screen,
         message: Constant.internetConnectionMessage,
+        arguments: arguments,
       ),
     );
   });

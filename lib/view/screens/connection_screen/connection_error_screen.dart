@@ -21,6 +21,7 @@ class NoConnection extends StatelessWidget {
 
     debugPrint("screen is : ${args.currentScreen}");
     debugPrint("message is : ${args.message}");
+    debugPrint("Current Screen : ${ModalRoute.of(context)!.settings.name}");
 
     return PopScope(
       canPop: false, // false or true
@@ -36,7 +37,7 @@ class NoConnection extends StatelessWidget {
         if (didPop) return;
         debugPrint(
             "POPSCOpe Called ================================================================> $didPop");
-        goBackUntil(RouterHelper.mainScreen);
+        goBackUntil(args.currentScreen);
       },
       child: Scaffold(
         backgroundColor: whitePrimary,
@@ -67,10 +68,9 @@ class NoConnection extends StatelessWidget {
               CustomButton(
                 buttonName: Constant.tryAgain,
                 buttonTextColor: whitePrimary,
-                onPressed: () {
-                  goBackIfCan(
-                      elseCondition: goReplacementNamed(args.currentScreen));
-                },
+                onPressed: () => goForwardAndBackUntilPath(
+                    RouterHelper.noConnectionScreen, args.currentScreen,
+                    arguments: args.arguments),
               ),
             ],
           ).paddingSymmetric(horizontal: 16.w),

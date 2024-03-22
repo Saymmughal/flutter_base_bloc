@@ -1,4 +1,3 @@
-// import 'package:dio/src/dio_error.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_base_bloc/helper/routes_helper.dart';
 import 'package:flutter_base_bloc/main.dart';
@@ -7,7 +6,8 @@ import 'package:flutter_base_bloc/view/widgets/custom_snackbar.dart';
 
 import '../model/connection_model/connection_model.dart';
 
-void apiException(DioException exception, String screen) {
+void apiException(
+    DioException exception,String screen, {Object? arguments}) {
   ConnectionModel? connectionModel;
 
   void navigateToNoConnectionScreen() {
@@ -24,6 +24,7 @@ void apiException(DioException exception, String screen) {
       connectionModel = ConnectionModel(
         currentScreen: screen,
         message: Constant.internetConnectionMessage,
+        arguments: arguments,
       );
       navigateToNoConnectionScreen();
       break;
@@ -31,6 +32,7 @@ void apiException(DioException exception, String screen) {
       connectionModel = ConnectionModel(
         currentScreen: screen,
         message: Constant.requestToAPIServerWasCancelled,
+        arguments: arguments,
       );
       navigateToNoConnectionScreen();
       break;
@@ -38,6 +40,7 @@ void apiException(DioException exception, String screen) {
       connectionModel = ConnectionModel(
         currentScreen: screen,
         message: Constant.receiveTimeOutError,
+        arguments: arguments,
       );
       navigateToNoConnectionScreen();
       break;
@@ -45,6 +48,7 @@ void apiException(DioException exception, String screen) {
       connectionModel = ConnectionModel(
         currentScreen: screen,
         message: Constant.sendTimeOutError,
+        arguments: arguments,
       );
       navigateToNoConnectionScreen();
       break;
@@ -52,6 +56,7 @@ void apiException(DioException exception, String screen) {
       connectionModel = ConnectionModel(
         currentScreen: screen,
         message: Constant.connectionTimeOutError,
+        arguments: arguments,
       );
       navigateToNoConnectionScreen();
       break;
@@ -59,6 +64,7 @@ void apiException(DioException exception, String screen) {
       connectionModel = ConnectionModel(
         currentScreen: screen,
         message: Constant.somethingWentWrong,
+        arguments: arguments,
       );
       switch (exception.response!.statusCode) {
         case 400:
