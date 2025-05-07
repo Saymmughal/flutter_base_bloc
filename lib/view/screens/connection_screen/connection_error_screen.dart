@@ -25,7 +25,7 @@ class NoConnection extends StatelessWidget {
 
     return PopScope(
       canPop: false, // false or true
-      onPopInvoked: (bool didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         /* ================================================================================================
         [canPop: true]
         if canPop is true then it will go to the check (didPop == true) then you can only have to call the function.
