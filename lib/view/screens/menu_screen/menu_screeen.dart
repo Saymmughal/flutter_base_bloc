@@ -20,7 +20,7 @@ class MenuScreen extends StatelessWidget {
           return Scaffold(
               backgroundColor: greenPrimary,
               body: Container(
-                child: 'Menu Screen'.toText().onPress(() {
+                child: 'Menu Screen'.to12W600Text().onPress(() {
                   authABloc.setLoading(true);
                   Future.delayed(const Duration(seconds: 5), () {
                     authABloc.setLoading(false);

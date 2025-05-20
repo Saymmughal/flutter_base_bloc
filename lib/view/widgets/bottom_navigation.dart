@@ -43,9 +43,9 @@ class BottomNavigation extends StatelessWidget {
                 type: BottomNavigationBarType.fixed,
                 unselectedFontSize: 10.h,
                 selectedFontSize: 10.h,
-                selectedLabelStyle: const TextStyle(fontFamily: poppinsRegular),
+                selectedLabelStyle: TextStyle(fontWeight: w400),
                 unselectedLabelStyle:
-                    const TextStyle(fontFamily: poppinsRegular),
+                     TextStyle(fontWeight: w400),
                 selectedItemColor: preLudeLight,
                 unselectedItemColor: blackPrimary,
                 backgroundColor: Colors.transparent,

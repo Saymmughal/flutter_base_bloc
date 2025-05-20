@@ -4,6 +4,7 @@ import 'package:flutter_base_bloc/helper/bloc_provider_helper.dart';
 import 'package:flutter_base_bloc/helper/routes_helper.dart';
 import 'package:flutter_base_bloc/helper/scroll_behaviour.dart';
 import 'package:flutter_base_bloc/utils/colors.dart';
+import 'package:flutter_base_bloc/utils/style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
           title: 'Base Project',
           theme: ThemeData(
             useMaterial3: false,
+            fontFamily: poppins,
             primarySwatch: const MaterialColor(0x306A99, primaryColor),
             pageTransitionsTheme: const PageTransitionsTheme(builders: {
               TargetPlatform.android: CupertinoPageTransitionsBuilder(),

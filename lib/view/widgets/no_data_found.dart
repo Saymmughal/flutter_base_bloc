@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base_bloc/utils/colors.dart';
-import 'package:flutter_base_bloc/utils/style.dart';
 import 'package:flutter_base_bloc/view/widgets/extention/int_extension.dart';
 import 'package:flutter_base_bloc/view/widgets/extention/string_extension.dart';
 
@@ -16,10 +15,8 @@ class NoDataFound extends StatelessWidget {
         children: [
           // Logo of the Error that no data found
           8.height,
-          title.toText(
+          title.to14W500Text(
             textAlign: TextAlign.center,
-            fontSize: 14,
-            fontFamily: poppinsMedium,
             color: whitePrimary,
           ),
         ],

@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 
 // fontFamily
 
-const String poppinsLight = "Poppins-Light";
-const String poppinsRegular = "Poppins-Regular";
-const String poppinsMedium = "Poppins-Medium";
-const String poppinsSemiBold = "Poppins-SemiBold";
-const String poppinsBold = "Poppins-Bold";
+const String poppins = "Poppins";
 
 // Font Weight
 FontWeight w100 = FontWeight.w100;

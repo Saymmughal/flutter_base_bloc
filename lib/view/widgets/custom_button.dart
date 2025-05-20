@@ -44,7 +44,7 @@ class CustomButton extends StatelessWidget {
                   colors: buttonGradientColor,
                 )),
             child: buttonName
-                .toText(
+                .to12W400Text(
                   color: buttonTextColor,
                   fontSize: textSize,
                 )

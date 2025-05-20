@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base_bloc/main.dart';
 import 'package:flutter_base_bloc/utils/colors.dart';
-import 'package:flutter_base_bloc/utils/style.dart';
 import 'package:flutter_base_bloc/view/widgets/extention/string_extension.dart';
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showToast(
@@ -33,11 +32,10 @@ SnackBar _customSnackBar(BuildContext context, String message, bool isError) {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: message.toText(
-              textAlign: TextAlign.start,
-              fontSize: 14,
-              color: whitePrimary,
-              fontFamily: poppinsMedium),
+          child: message.to14W500Text(
+            textAlign: TextAlign.start,
+            color: whitePrimary,
+          ),
         ),
       ),
     ),
