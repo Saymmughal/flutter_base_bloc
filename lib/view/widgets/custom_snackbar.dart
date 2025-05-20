@@ -4,7 +4,7 @@ import 'package:flutter_base_bloc/utils/colors.dart';
 import 'package:flutter_base_bloc/view/widgets/extention/string_extension.dart';
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showToast(
-    {required String message, required bool isError}) {
+    String message,{bool isError = true}) {
   return ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
       _customSnackBar(navigatorKey.currentContext!, message, isError));
 }

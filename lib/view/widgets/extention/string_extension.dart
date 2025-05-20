@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_base_bloc/main.dart';
 import 'package:flutter_base_bloc/utils/style.dart';
-import 'package:flutter_base_bloc/view/widgets/extention/int_extension.dart';
 
 extension StringExtension on String {
   Widget _toText(
@@ -20,7 +20,7 @@ extension StringExtension on String {
           height: lineHeight,
           backgroundColor: backgroundColor,
           color: color ?? Colors.black,
-          fontSize: (fontSize ?? 12).toInt().h,
+          fontSize: (fontSize ?? 12).toInt().fsp(),
           fontFamily: poppins,
           fontStyle: FontStyle.normal,
           overflow: overflow ?? TextOverflow.ellipsis,
@@ -407,4 +407,16 @@ extension StringExtension on String {
         color: color,
         overflow: overflow,
       );
+}
+
+extension FontSizeExtension on num {
+  static const double _figmaScreenWidth = 430; // Hardcoded Figma screen width
+
+  double fsp() {
+    // Access the current screen width using MediaQuery
+    final screenWidth = MediaQuery.of(navigatorKey.currentContext!).size.width;
+
+    // Calculate the scaled font size
+    return (this / _figmaScreenWidth) * screenWidth;
+  }
 }

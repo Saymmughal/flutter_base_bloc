@@ -6,8 +6,7 @@ import 'package:flutter_base_bloc/view/widgets/custom_snackbar.dart';
 
 import '../model/connection_model/connection_model.dart';
 
-void apiException(
-    DioException exception,String screen, {Object? arguments}) {
+void apiException(DioException exception, String screen, {Object? arguments}) {
   ConnectionModel? connectionModel;
 
   void navigateToNoConnectionScreen() {
@@ -85,10 +84,10 @@ void apiException(
         default:
           break;
       }
-      showToast(message: connectionModel.message, isError: true);
+      showToast(connectionModel.message);
       break;
     default:
-      showToast(message: exception.response!.data['message'], isError: true);
+      showToast(exception.response!.data['message']);
       break;
   }
 }

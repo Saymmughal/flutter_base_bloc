@@ -3,6 +3,12 @@ class Constant {
   static const String homeText = "Home";
   static const String menuText = "Menu";
 
+  static const String cameraText = "Camera";
+  static const String galleryText = "Gallery";
+  static const String setImage = "Set Image";
+  static const String cancelText = "Cancel";
+  static const String doneText = "Done";
+
   // Date Text
   static const String yearText = "year";
   static const String yearsText = "years";
@@ -25,17 +31,24 @@ class Constant {
   static const String enterYourPhoneNumber = "Enter Your Phone Number";
   static const String enterValidPhoneNumber = "Enter Valid Phone Number";
   static const String enterYourPassword = "Enter Your Password";
-  static const String passwordValidaion = "Must be at least 8 characters and include 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character ! @ # \$ % & +";
-  static const String passwordAtleast8Characters = "Password At least 8 Characters";
+  static const String passwordValidaion =
+      "Must be at least 8 characters and include 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character ! @ # \$ % & +";
+  static const String passwordAtleast8Characters =
+      "Password At least 8 Characters";
   static const String passwordIsNotMatched = "Password is not matched";
   static const String pleaseEnterValidCode = "Please Enter Valid Code";
   static const String pleeaseEnterReason = "Please enter Reason";
 
   // Error Text
-  static const String errorText = "Oops! Something went wrong. Let's try again.";
+  static const String imageSizeMustBeLessThen1MB =
+      "Image size must be less then 1 MB";
+  static const String errorText =
+      "Oops! Something went wrong. Let's try again.";
   static const String tryAgain = "Try again";
-  static const String internetConnectionMessage = "Check your Internet Connection";
-  static const String requestToAPIServerWasCancelled = "Request to API server was cancelled";
+  static const String internetConnectionMessage =
+      "Check your Internet Connection";
+  static const String requestToAPIServerWasCancelled =
+      "Request to API server was cancelled";
   static const String receiveTimeOutError = "Receive timeout error";
   static const String sendTimeOutError = "Send timeout error";
   static const String somethingWentWrong = "Something went Wrong";
