@@ -125,7 +125,7 @@ class ForgotPasswordBloc
     emit(const ForgotPasswordLoading());
     loaderDialog();
 
-    bool isConnected = ConnectionManager().showInternetError();
+    bool isConnected = ConnectionManager().isConnected;
     if (!isConnected) {
       goBack();
       emit(ForgotPasswordFailure(error: AppStrings.noInternetConnection));

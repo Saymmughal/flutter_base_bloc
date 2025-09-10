@@ -12,6 +12,11 @@ This project serves as a **production-ready Flutter template** that demonstrates
 - **Local Storage** - SharedPreferences for data persistence
 - **Error Handling** - Comprehensive error management
 - **String Management** - Centralized string constants
+- **Performance Optimizations** - Cached calculations and background operations
+- **Cached Operations**: Background thread operations to prevent main thread blocking
+- **Performance Optimized**: Debounced connection checks to prevent frame skipping
+- **Asynchronous UI Updates**: Non-blocking UI operations during connection changes
+- **Smart Toast Management**: Proper toast dismissal and state management
 
 ## 🏗️ Architecture
 
@@ -256,7 +261,27 @@ class AppStrings {
 4. **State Emission** → New state broadcast
 5. **UI Rebuild** → Widget tree updates
 
+## ⚡ Performance Optimizations
+
+### Main Thread Optimization
+- **Cached Calculations**: Screen dimensions and font scaling cached to prevent repeated calculations
+- **Background Operations**: SharedPreferences and network operations run off main thread
+- **Debounced Checks**: Connection state changes debounced to prevent excessive network calls
+- **Asynchronous UI Updates**: UI operations scheduled after current frame to prevent blocking
+
+### Memory Management
+- **Smart Caching**: Dimension and font calculations cached with automatic invalidation
+- **Resource Cleanup**: Proper disposal of timers and streams
+- **Efficient State Management**: Optimized provider updates to reduce rebuilds
+
+### Performance Monitoring
+- **Frame Rate Tracking**: Real-time monitoring of dropped frames in debug mode
+- **Performance Metrics**: FPS and frame time monitoring
+- **Debug Logging**: Comprehensive logging for performance analysis
+
+
 ## 🧪 Testing
+- **Advanced Performance**: Further optimization for large-scale apps
 
 ### **Unit Tests**
 ```bash

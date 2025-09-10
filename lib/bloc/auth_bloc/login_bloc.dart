@@ -131,7 +131,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(const LoginLoading());
     loaderDialog();
 
-    bool isConnected = ConnectionManager().showInternetError();
+    bool isConnected = ConnectionManager().isConnected;
     if (!isConnected) {
       goBack();
       emit(LoginFailure(error: AppStrings.noInternetConnection));

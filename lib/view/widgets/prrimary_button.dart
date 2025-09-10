@@ -33,24 +33,21 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        height: height ?? 55.h,
-        width: width ?? 358.w,
-        decoration: BoxDecoration(
-          borderRadius: borderRadiusCircular(radius),
-          border: Border.all(color: borderColor),
-          color: buttonColor,
-        ),
-        child: buttonName
-            .toText(
-              color: buttonTextColor,
-              fontSize: textSize,
-              fontWeight: AppStyle.w600,
-            )
-            .center,
+    return Container(
+      height: height ?? 55.h,
+      width: width ?? 358.w,
+      decoration: BoxDecoration(
+        borderRadius: borderRadiusCircular(radius),
+        border: Border.all(color: borderColor),
+        color: buttonColor,
       ),
-    );
+      child: buttonName
+          .toText(
+            color: buttonTextColor,
+            fontSize: textSize,
+            fontWeight: AppStyle.w600,
+          )
+          .center,
+    ).onPress(onPressed);
   }
 }

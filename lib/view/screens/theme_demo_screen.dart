@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base_bloc/utils/app_styles/style.dart';
+import 'package:flutter_base_bloc/utils/dimension.dart';
+import 'package:flutter_base_bloc/utils/dimension_manager.dart';
+import 'package:flutter_base_bloc/utils/font_scaling_manager.dart';
+import 'package:flutter_base_bloc/view/widgets/extention/annotated_widget.dart';
 import 'package:flutter_base_bloc/view/widgets/extention/int_extension.dart';
+import 'package:flutter_base_bloc/view/widgets/extention/widget_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_base_bloc/bloc/theme_bloc/theme_bloc.dart';
 import 'package:flutter_base_bloc/view/widgets/theme_toggle_widget.dart';
@@ -17,165 +22,191 @@ class ThemeDemoScreen extends StatelessWidget {
       builder: (context, state) {
         final currentThemeMode = state.themeMode;
 
-        return Scaffold(
-          appBar: AppBar(
-            title: AppStrings.themeDemo.toText(),
-            backgroundColor: AppThemeColors.getSurface(currentThemeMode),
-            actions: [const ThemeToggleWidget(), 16.width],
-          ),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Current Theme Info
-                Card(
-                  color: AppThemeColors.getCardColor(currentThemeMode),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppStrings.currentTheme.toText(
-                          fontSize: 20,
-                          fontWeight: AppStyle.w600,
-                        ),
-                        8.height,
-                        Row(
-                          children: [
-                            Icon(
-                              _getThemeIcon(currentThemeMode),
-                              color: AppThemeColors.getPrimary(
-                                currentThemeMode,
-                              ),
-                            ),
-                            16.width,
-                            _getThemeName(
+        return annotatedRegionWidget(
+          context: context,
+          child: OrientationBuilder(
+            builder: (context, orientation) {
+              // Mark dimension manager for refresh on orientation change
+              DimensionManager.instance.markForRefresh();
+              // Clear font scaling cache on orientation change
+              FontScalingManager.instance.clearCache();
+              return Scaffold(
+                appBar: AppBar(
+                  title: AppStrings.themeDemo.toText(),
+                  backgroundColor: AppThemeColors.getSurface(currentThemeMode),
+                  actions: [const ThemeToggleWidget(), 16.width],
+                ),
+                body: SingleChildScrollView(
+                  child:
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Current Theme Info
+                          Card(
+                            color: AppThemeColors.getCardColor(
                               currentThemeMode,
-                            ).toText(fontSize: 16),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                16.height,
-
-                // Typography Section
-                AppStrings.typography.toText(
-                  fontSize: 18,
-                  fontWeight: AppStyle.w600,
-                ),
-                16.height,
-                Card(
-                  color: AppThemeColors.getCardColor(currentThemeMode),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppStrings.displayLarge.toText(
-                          fontSize: 32,
-                          fontWeight: AppStyle.w700,
-                        ),
-                        AppStrings.displayMedium.toText(
-                          fontSize: 28,
-                          fontWeight: AppStyle.w700,
-                        ),
-                        AppStrings.headlineLarge.toText(
-                          fontSize: 22,
-                          fontWeight: AppStyle.w700,
-                        ),
-                        AppStrings.titleLarge.toText(
-                          fontSize: 16,
-                          fontWeight: AppStyle.w700,
-                        ),
-                        AppStrings.bodyLarge.toText(fontSize: 16),
-                        AppStrings.bodyMedium.toText(fontSize: 14),
-                        AppStrings.labelLarge.toText(
-                          fontSize: 14,
-                          fontWeight: AppStyle.w500,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                16.height,
-
-                // Colors Section
-                AppStrings.colors.toText(
-                  fontSize: 18,
-                  fontWeight: AppStyle.w600,
-                ),
-                16.height,
-                Card(
-                  color: AppThemeColors.getCardColor(currentThemeMode),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                color: AppThemeColors.getPrimary(
-                                  currentThemeMode,
-                                ),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
                             ),
-                            16.width,
-                            AppStrings.primaryColor.toText(),
-                          ],
-                        ),
-                        8.height,
-                        Row(
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                color: AppThemeColors.getSecondary(
-                                  currentThemeMode,
-                                ),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                            16.width,
-                            AppStrings.secondaryColor.toText(),
-                          ],
-                        ),
-                        8.height,
-                        Row(
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                color: AppThemeColors.getSurface(
-                                  currentThemeMode,
-                                ),
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(
-                                  color: AppThemeColors.getTextOnSurface(
-                                    currentThemeMode,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppStrings.currentTheme.toText(
+                                    fontSize: 20,
+                                    fontWeight: AppStyle.w600,
                                   ),
-                                ),
+                                  8.height,
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        _getThemeIcon(currentThemeMode),
+                                        color: AppThemeColors.getPrimary(
+                                          currentThemeMode,
+                                        ),
+                                      ),
+                                      16.width,
+                                      _getThemeName(
+                                        currentThemeMode,
+                                      ).toText(fontSize: 16),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
-                            16.width,
-                            AppStrings.surfaceColor.toText(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                          ),
+                          16.height,
+
+                          // Typography Section
+                          AppStrings.typography.toText(
+                            fontSize: 18,
+                            fontWeight: AppStyle.w600,
+                          ),
+                          16.height,
+                          Card(
+                            color: AppThemeColors.getCardColor(
+                              currentThemeMode,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppStrings.displayLarge.toText(
+                                    fontSize: 32,
+                                    fontWeight: AppStyle.w700,
+                                  ),
+                                  AppStrings.displayMedium.toText(
+                                    fontSize: 28,
+                                    fontWeight: AppStyle.w700,
+                                  ),
+                                  AppStrings.headlineLarge.toText(
+                                    fontSize: 22,
+                                    fontWeight: AppStyle.w700,
+                                  ),
+                                  AppStrings.titleLarge.toText(
+                                    fontSize: 16,
+                                    fontWeight: AppStyle.w700,
+                                  ),
+                                  AppStrings.bodyLarge.toText(fontSize: 16),
+                                  AppStrings.bodyMedium.toText(fontSize: 14),
+                                  AppStrings.labelLarge.toText(
+                                    fontSize: 14,
+                                    fontWeight: AppStyle.w500,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          16.height,
+
+                          // Colors Section
+                          AppStrings.colors.toText(
+                            fontSize: 18,
+                            fontWeight: AppStyle.w600,
+                          ),
+                          16.height,
+                          Card(
+                            color: AppThemeColors.getCardColor(
+                              currentThemeMode,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
+                                          color: AppThemeColors.getPrimary(
+                                            currentThemeMode,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            4,
+                                          ),
+                                        ),
+                                      ),
+                                      16.width,
+                                      AppStrings.primaryColor.toText(),
+                                    ],
+                                  ),
+                                  8.height,
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
+                                          color: AppThemeColors.getSecondary(
+                                            currentThemeMode,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            4,
+                                          ),
+                                        ),
+                                      ),
+                                      16.width,
+                                      AppStrings.secondaryColor.toText(),
+                                    ],
+                                  ),
+                                  8.height,
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
+                                          color: AppThemeColors.getSurface(
+                                            currentThemeMode,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            4,
+                                          ),
+                                          border: Border.all(
+                                            color:
+                                                AppThemeColors.getTextOnSurface(
+                                                  currentThemeMode,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                      16.width,
+                                      AppStrings.surfaceColor.toText(),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ).paddingSymmetric(
+                        horizontal: isLandscapePossible ? 50.w : 20.w,
+                      ),
                 ),
-              ],
-            ),
+              );
+            },
           ),
         );
       },

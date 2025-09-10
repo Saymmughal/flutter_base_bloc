@@ -3,6 +3,8 @@ import 'package:flutter_base_bloc/helper/router_navigator.dart';
 import 'package:flutter_base_bloc/helper/routes_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base_bloc/utils/app_styles/style.dart';
+import 'package:flutter_base_bloc/utils/dimension_manager.dart';
+import 'package:flutter_base_bloc/utils/font_scaling_manager.dart';
 import 'package:flutter_base_bloc/view/widgets/extention/int_extension.dart';
 import 'package:flutter_base_bloc/view/widgets/extention/string_extension.dart';
 import 'package:flutter_base_bloc/utils/app_styles/app_theme_colors.dart';
@@ -18,10 +20,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  
   @override
   void initState() {
     super.initState();
+    // Initialize dimension manager and font scaling
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      DimensionManager.instance.initialize(context);
+      FontScalingManager.instance.preCalculateCommonSizes();
+    });
     routes();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Update dimension manager when screen size changes
+    DimensionManager.instance.forceRefresh(context);
   }
 
   void routes() async {

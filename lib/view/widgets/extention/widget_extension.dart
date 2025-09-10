@@ -1,12 +1,13 @@
 //WIDGET EXTENSION
 import 'package:flutter/material.dart';
+import 'package:flutter_base_bloc/utils/app_styles/colors.dart';
 
 extension WidgetExtension on Widget {
   // OnPress
   Widget onPress(VoidCallback onTap) => InkWell(
       onTap: onTap,
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
+      splashColor: AppColors.transparentColor,
+      highlightColor: AppColors.transparentColor,
       child: this);
 
   // CENTER

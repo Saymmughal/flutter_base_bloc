@@ -1,18 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_base_bloc/utils/app_constants.dart';
-import '../main.dart';
+import 'package:flutter_base_bloc/utils/dimension_manager.dart';
 
-double get screenHeight =>
-    MediaQuery.of(navigatorKey.currentContext!).size.height;
-double get screenWidth =>
-    MediaQuery.of(navigatorKey.currentContext!).size.width;
+// Optimized dimension getters using cached values
+double get screenHeight => DimensionManager.instance.screenHeight;
+double get screenWidth => DimensionManager.instance.screenWidth;
+bool get isLandscapePossible => DimensionManager.instance.isLandscapePossible;
+double get appBarHeight => DimensionManager.instance.appBarHeight;
+double get statusBarHeight => DimensionManager.instance.statusBarHeight;
+double get bottomBarHeight => DimensionManager.instance.bottomBarHeight;
+double get safeAreaHeight => DimensionManager.instance.safeAreaHeight;
 
-double widgetHeight(double pixels) {
-  return MediaQuery.of(navigatorKey.currentContext!).size.height /
-      (AppConstants.designHeight / pixels);
-}
-
-double widgetWidth(double pixels) {
-  return MediaQuery.of(navigatorKey.currentContext!).size.width /
-      (AppConstants.designWidth / pixels);
-}
+// Optimized widget dimension calculations using cached values
+double widgetHeight(double pixels) =>
+    DimensionManager.instance.widgetHeight(pixels);
+double widgetWidth(double pixels) =>
+    DimensionManager.instance.widgetWidth(pixels);

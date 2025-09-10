@@ -12,67 +12,103 @@ class LocalDb {
   static const String _userIdKey = "userId";
   static const String _themeModeKey = "themeMode";
 
+  // Cache for frequently accessed values to reduce main thread work
+  static final Map<String, dynamic> _cache = {};
+  static bool _cacheInitialized = false;
+
+  /// Initialize cache to improve performance
+  static Future<void> initializeCache() async {
+    if (_cacheInitialized) return;
+
+    // Load cache data directly
+    final prefs = await SharedPreferences.getInstance();
+    _cache[_bearerTokenKey] = prefs.getString(_bearerTokenKey);
+    _cache[_isLoginKey] = prefs.getBool(_isLoginKey);
+    _cache[_userDataKey] = prefs.getString(_userDataKey);
+    _cache[_fcmTokenKey] = prefs.getString(_fcmTokenKey);
+    _cache[_userIdKey] = prefs.getInt(_userIdKey);
+    _cache[_themeModeKey] = prefs.getInt(_themeModeKey);
+    _cacheInitialized = true;
+  }
+
+  /// Run operation with proper async scheduling
+  static Future<T> _runInBackground<T>(Future<T> Function() operation) async {
+    // Use Future.delayed with zero duration to yield control to the event loop
+    await Future.delayed(Duration.zero);
+    return await operation();
+  }
+
   //=============================================================================
   // Set bearer token
   static Future<void> storeBearerToken(String value) async {
-    // initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Store bearer token in shared preferences
-    sharedPreferences.setString(_bearerTokenKey, value);
+    // Update cache immediately for faster access
+    _cache[_bearerTokenKey] = value;
+    // Store in background to avoid blocking main thread
+    await _runInBackground(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_bearerTokenKey, value);
+    });
   }
 
   // Get bearer token
   static Future<String?> get getBearerToken async {
-    // Initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Get the bearer token which we have stored in sharedPreferences before
-    String? bearerToken = sharedPreferences.getString(_bearerTokenKey);
-    return bearerToken;
+    // Initialize cache if not already done
+    if (!_cacheInitialized) await initializeCache();
+    // Return cached value for faster access
+    return _cache[_bearerTokenKey] as String?;
   }
 
   //=============================================================================
   // Set FCM token
   static Future<void> storeFcmToken(String value) async {
-    // initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Store fcm token in shared preferences
-    sharedPreferences.setString(_fcmTokenKey, value);
+    // Update cache immediately for faster access
+    _cache[_fcmTokenKey] = value;
+    // Store in background to avoid blocking main thread
+    await _runInBackground(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_fcmTokenKey, value);
+    });
   }
 
-  // Get bearer token
+  // Get FCM token
   static Future<String?> get getFcmToken async {
-    // Initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Get the fcm token which we have stored in sharedPreferences before
-    String? bearerToken = sharedPreferences.getString(_fcmTokenKey);
-    return bearerToken;
+    // Initialize cache if not already done
+    if (!_cacheInitialized) await initializeCache();
+    // Return cached value for faster access
+    return _cache[_fcmTokenKey] as String?;
   }
 
   //=============================================================================
   // Set user isLogin
   static Future<void> storeLogin(bool value) async {
-    // initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Store user isLoginin shared preferences
-    sharedPreferences.setBool(_isLoginKey, value);
+    // Update cache immediately for faster access
+    _cache[_isLoginKey] = value;
+    // Store in background to avoid blocking main thread
+    await _runInBackground(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_isLoginKey, value);
+    });
   }
 
   // Get user login Status
   static Future<bool?> get getLogin async {
-    // Initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Get the user isLoginwhich we have stored in sharedPreferences before
-    bool? isLogin = sharedPreferences.getBool(_isLoginKey);
-    return isLogin;
+    // Initialize cache if not already done
+    if (!_cacheInitialized) await initializeCache();
+    // Return cached value for faster access
+    return _cache[_isLoginKey] as bool?;
   }
 
   //=============================================================================
   // Store User Data
   static Future<void> storeUserData(dynamic value) async {
-    // initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Store User Data in shared preferences
-    sharedPreferences.setString(_userDataKey, jsonEncode(value));
+    final jsonString = jsonEncode(value);
+    // Update cache immediately for faster access
+    _cache[_userDataKey] = jsonString;
+    // Store in background to avoid blocking main thread
+    await _runInBackground(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_userDataKey, jsonString);
+    });
   }
 
   // Get User Data
@@ -83,57 +119,82 @@ class LocalDb {
   final userData = UserData.fromJson(value);
   */
   static Future<String?> get getUserData async {
-    // Initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Get the User Data which we have stored in sharedPreferences before
-    var myData = sharedPreferences.getString(_userDataKey);
-    dynamic token;
+    // Initialize cache if not already done
+    if (!_cacheInitialized) await initializeCache();
+    // Get cached data and decode if needed
+    final myData = _cache[_userDataKey] as String?;
     if (myData != null) {
-      token = jsonDecode(myData);
+      try {
+        return jsonDecode(myData);
+      } catch (e) {
+        return null;
+      }
     }
-    return token;
+    return null;
   }
 
   //=============================================================================
   // Set userid
   static Future<void> storeUserId(int value) async {
-    // initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Store user id shared preferences
-    sharedPreferences.setInt(_userIdKey, value);
+    // Update cache immediately for faster access
+    _cache[_userIdKey] = value;
+    // Store in background to avoid blocking main thread
+    await _runInBackground(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_userIdKey, value);
+    });
   }
 
-  // Get user login Status
+  // Get user ID
   static Future<int?> get getUserId async {
-    // Initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Get the userid we have stored in sharedPreferences before
-    int? userId = sharedPreferences.getInt(_userIdKey);
-    return userId;
+    // Initialize cache if not already done
+    if (!_cacheInitialized) await initializeCache();
+    // Return cached value for faster access
+    return _cache[_userIdKey] as int?;
   }
 
   //=============================================================================
-  // Theme Mode Storage
+  // Theme Mode Storage (Optimized for frequent access)
   static Future<void> storeThemeMode(int value) async {
-    // initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Store theme mode in shared preferences
-    sharedPreferences.setInt(_themeModeKey, value);
+    // Update cache immediately for faster access
+    _cache[_themeModeKey] = value;
+    // Store in background to avoid blocking UI
+    await _runInBackground(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_themeModeKey, value);
+    });
   }
 
   // Get theme mode
   static Future<int?> get getThemeMode async {
-    // Initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // Get the theme mode we have stored in sharedPreferences before
-    int? themeMode = sharedPreferences.getInt(_themeModeKey);
-    return themeMode;
+    // Initialize cache if not already done
+    if (!_cacheInitialized) await initializeCache();
+    // Return cached value for faster access
+    return _cache[_themeModeKey] as int?;
+  }
+
+  //=============================================================================
+  // Cache Management
+  static Future<void> clearCache() async {
+    _cache.clear();
+    _cacheInitialized = false;
+  }
+
+  /// Refresh cache from storage (useful after external changes)
+  static Future<void> refreshCache() async {
+    _cacheInitialized = false;
+    await initializeCache();
   }
 
   // Reset SharedPreference
   static Future<void> get resetSharedPreference async {
-    // Initialized shared preferences
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
+    // Clear cache first
+    _cache.clear();
+    _cacheInitialized = false;
+    // Clear storage in background
+    await _runInBackground(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+    });
   }
 }
